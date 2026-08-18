@@ -1,91 +1,29 @@
-//collecting feedback from users and display the results.
 import { useState } from 'react'
 
-const  StatisticLine = ({text, value}) =>{
-  return(
-    <tr>
-      <td>{text}</td>
-      <td>{value}</td>
-    </tr>
-  )
-}
-
-const Statistics = ({ good, neutral, bad, average, positive }) => {
-  const total = good + neutral + bad;
- //to calculate the average value of the feedback from the total feedbaks
-  if(total=== 0){
-    average =0;
-  } else{
-    average = (good *1 +neutral *0 +bad * -1) /total
-  }
-
-//calculating the percentage of positive feedback from the total feeback
-  if(total ===0){
-    positive =0
-  } else{
-    positive = (good/total)*100
-  }
+const App = () => {
+  const anecdotes = [
+    'If it hurts, do it more often.',
+    'Adding manpower to a late software project makes it later!',
+    'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+    'Premature optimization is the root of all evil.',
+    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
+    'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
+    'The only way to go fast, is to go well.'
+  ]
   
+  const [selected, setSelected] = useState(0)
+
+  const handleNext = ()=>{
+     const randomIndex = Math.floor(Math.random() * anecdotes.length)
+     setSelected(randomIndex)
+  }
   return (
     <div>
-      <h2>Statistics</h2>
-      <table>
-        <tbody>
-          <StatisticLine text="good" value={good} />
-          <StatisticLine text="neutral" value={neutral} />
-          <StatisticLine text="bad" value={bad} />
-          <StatisticLine text="average" value={average} />
-          <StatisticLine text="positive" value={`${positive}%`} />
-        </tbody>
-      </table>
+      {anecdotes[selected]}
+      <button onClick={handleNext}>Next Anecdote</button>
     </div>
   )
-}
-
-
-const App = () => {
- // calulate the number of good, neutral and bad feedbacks
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0);
-  const total = good + neutral + bad;
-  // display no feedback given if the total feedback is 0, else display the Statistic of the feedbacks
-  if (total ===0){
-    return (
-    <>
-    
-     <h1>give feedback</h1>
-     <div>
-      <button onClick = {()=>setGood(good+1)}>good</button>
-      <button onClick = {()=>setNeutral(neutral+1)}>neutral</button>
-      <button onClick = {()=>setBad(bad+1)}>bad</button>
-    </div>
-    <h2>Statistics</h2>
-   <p>No feedback given</p>
-    </>
-    
-  )
-  } else{
-    return (
-    <>
-    <div>
-     <h1>give feedback</h1>
-     
-      <button onClick = {()=>setGood(good+1)}>good</button>
-      <button onClick = {()=>setNeutral(neutral+1)}>neutral</button>
-      <button onClick = {()=>setBad(bad+1)}>bad</button>
-    </div>
-    <Statistics good = {good} neutral = {neutral} bad = {bad} />
-    
-    </>
-    
-  )
-  }
-    
-  
-
-  
-  
 }
 
 export default App
