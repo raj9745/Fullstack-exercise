@@ -1,50 +1,35 @@
-const Header = (props) => {
-  // If this logs undefined, your file is 100% not saving or compiling.
-  console.log('Header received:', props.courseName)
-  return <h1>{props.courseName}</h1>
-}
-
-const Part = (props) => {
-  return <p>{props.name} {props.exercises}</p>
-}
-
-const Content = (props) => {
-  console.log('Content received:', props.courseParts)
-  return (
-    <div>
-      <Part name={props.courseParts[0].name} exercises={props.courseParts[0].exercises} />
-      <Part name={props.courseParts[1].name} exercises={props.courseParts[1].exercises} />
-      <Part name={props.courseParts[2].name} exercises={props.courseParts[2].exercises} />
-    </div>
-  )
-}
-
-const Total = (props) => {
-  return (
-    <p>
-      Number of exercises{' '}
-      {props.courseParts[0].exercises + props.courseParts[1].exercises + props.courseParts[2].exercises}
-    </p>
-  )
-}
+import { useState } from 'react'
 
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      { name: 'Fundamentals of React', exercises: 10 },
-      { name: 'Using props to pass data', exercises: 7 },
-      { name: 'State of a component', exercises: 14 }
-    ]
-  }
+  // save clicks of each button to its own state
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0);
+  const [average, setAverage] = useState(0);
+  const [positive, setPositive] = useState(0);
 
-  // We explicitly name new prop keys here to bypass any old typos cached by Vite
+
   return (
+    <>
     <div>
-      <Header courseName={course.name} />
-      <Content courseParts={course.parts} />
-      <Total courseParts={course.parts} />
+     <h1>give feedback</h1>
+     
+      <button onClick = {()=>setGood(good+1)}>good</button>
+      <button onClick = {()=>setNeutral(neutral+1)}>neutral</button>
+      <button onClick = {()=>setBad(bad+1)}>bad</button>
+     
     </div>
+
+    <div>
+     <h1>Statistics</h1>
+     <p>Good: {good}</p>
+     <p>Neutral: {neutral}</p>
+     <p>Bad: {bad}</p>
+     <p>Average: {average}</p>
+     <p>Positive: {positive}</p>
+    </div>
+    </>
+    
   )
 }
 
