@@ -1,6 +1,11 @@
 //collecting feedback from users and display the results.
 import { useState } from 'react'
 
+const  StatisticLine = ({text, value}) =>{
+  return(
+    <p>{text}:{value}</p>
+  )
+}
 
 const Statistics = ({ good, neutral, bad, average, positive }) => {
   const total = good + neutral + bad;
@@ -17,12 +22,13 @@ const Statistics = ({ good, neutral, bad, average, positive }) => {
   } else{
     positive = (good/total)*100
   }
+  
   return (
     <div>
       <h2>Statistics</h2>
-      <p>Good: {good}</p>
-      <p>Neutral: {neutral}</p>
-      <p>Bad: {bad}</p>
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
       <p>Average: {average}</p>
       <p>Positive: {positive}%</p>
     </div>
@@ -40,14 +46,14 @@ const App = () => {
   if (total ===0){
     return (
     <>
-    <div>
+    
      <h1>give feedback</h1>
-     
+     <div>
       <button onClick = {()=>setGood(good+1)}>good</button>
       <button onClick = {()=>setNeutral(neutral+1)}>neutral</button>
       <button onClick = {()=>setBad(bad+1)}>bad</button>
     </div>
-    <h1>Statistics</h1>
+    <h2>Statistics</h2>
    <p>No feedback given</p>
     </>
     
@@ -63,6 +69,7 @@ const App = () => {
       <button onClick = {()=>setBad(bad+1)}>bad</button>
     </div>
     <Statistics good = {good} neutral = {neutral} bad = {bad} />
+    
     </>
     
   )
